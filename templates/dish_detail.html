@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}{{ dish.name }} — WorldBite{% endblock %}
+
+{% block content %}
+
+<h2>{{ dish.name }}</h2>
+
+<img
+    src="{{ url_for('static', filename='image/' + dish.image) }}"
+    alt="{{ dish.name }}"
+    width="400"
+>
+
+<p>
+    <strong>Страна:</strong>
+    {{ dish.country }}
+</p>
+
+<p>
+    <strong>Описание:</strong>
+    {{ dish.description }}
+</p>
+
+<p>
+    <strong>Цена:</strong>
+    {{ dish.price }} тг
+</p>
+
+<p>
+    <a href="{{ url_for('order') }}">Заказать это блюдо</a>
+</p>
+
+<p>
+    <a href="{{ url_for('menu') }}">Вернуться в меню</a>
+</p>
+
+{% endblock %}

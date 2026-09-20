@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}WorldBite{% endblock %}</title>
+        <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #2F2823;
+        }
+        header {
+            background-color: #251709;
+            color: #e0d8c3;
+            padding: 20px;
+        }
+        nav { margin-top: 10px; }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+        }
+        nav a:hover { text-decoration: underline; }
+        main {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 30px;
+            background-color: white;
+        }
+        footer {
+            max-width: 900px;
+            margin: 20px auto;
+            color: #C5BBB4;
+        }
+        div{
+        background-color: #320a18;
+            color: #e0d8c3;
+            padding: 10px;
+        }
+    </style>
+
+</head>
+<body>
+
+    <header>
+        <h1>WorldBite</h1>
+        <p>Уличная еда со всего мира</p>
+
+        <nav>
+            <a href="{{ url_for('index') }}">Главная</a> |
+            <a href="{{ url_for('menu') }}">Меню</a> |
+            <a href="{{ url_for('order') }}">Заказать</a> |
+            <a href="{{ url_for('about') }}">О ресторане</a>
+        </nav>
+
+        <hr>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <hr>
+
+    <footer>
+        <p>WorldBite © 2026</p>
+        <p>
+    Наши контактные данные:
+    </p>
+    <ul>
+    <li>Телефон: +7914-256-78-32 </li>
+    <li>Instagram: @WorldBite</li>
+    <li>Email: World@bite.ru</li>
+    </footer>
+
+</body>
+</html>
