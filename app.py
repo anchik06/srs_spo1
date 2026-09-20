@@ -1,5 +1,4 @@
-
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, url_for
 
 app = Flask(__name__)
 
@@ -8,7 +7,9 @@ dishes = [
         "id": 1,
         "name": "Мексиканский вихрь в кукурузной лодке",
         "country": "Мексика",
-        "description": "Маленькая, но взрывная фиеста на вашей ладони. Тёплая, слегка шероховатая кукурузная тортилья хранит в себе сочную, маринованную в копчёном чили свинину. Яркая зелень кинзы, резкая, хрустящая нотка белого лука, свежесть редиса и финальная капля лайма превращают каждый укус в сочный, "
+        "description": "Маленькая, но взрывная фиеста на вашей ладони. "
+                       "Тёплая, слегка шероховатая кукурузная тортилья "
+                       "хранит в себе сочную, маринованную в копчёном чили свинину. Яркая зелень кинзы, резкая, хрустящая нотка белого лука, свежесть редиса и финальная капля лайма превращают каждый укус в сочный, "
                        "острый и невероятно живой карнавал красок.",
         "price": 350,
         "image": "taco.jpg"
@@ -55,14 +56,10 @@ dishes = [
     }
 ]
 
-
-# Главная страница
 @app.route("/")
 def index():
     return render_template("index.html")
 
-
-# Страница меню
 @app.route("/menu")
 def menu():
     country = request.args.get("country")
@@ -81,9 +78,6 @@ def menu():
         selected_country=country
     )
 
-
-# Страница отдельного блюда
-# Параметр маршрута — dish_id
 @app.route("/dish/<int:dish_id>")
 def dish_detail(dish_id):
     dish = next(
@@ -97,9 +91,6 @@ def dish_detail(dish_id):
     return render_template("dish_detail.html", dish=dish)
 
 
-# Страница оформления заказа
-# GET — показать форму
-# POST — обработать форму
 @app.route("/order", methods=["GET", "POST"])
 def order():
     error = None
@@ -110,19 +101,13 @@ def order():
         dish_id = request.form.get("dish_id", "")
         quantity_text = request.form.get("quantity", "").strip()
 
-        # Проверка имени
         if len(customer_name) < 2:
             error = "Введите имя длиной не менее 2 символов."
-
-        # Проверка телефона
         elif len(phone) < 5:
             error = "Введите корректный номер телефона."
-
-        # Проверка выбранного блюда
         elif not any(str(dish["id"]) == dish_id for dish in dishes):
             error = "Выберите блюдо из списка."
 
-        # Проверка количества
         else:
             try:
                 quantity = int(quantity_text)
@@ -151,7 +136,6 @@ def order():
 
         total_price = selected_dish["price"] * quantity
 
-        # Передаём данные на страницу подтверждения
         return render_template(
             "confirmation.html",
             customer_name=customer_name,
@@ -163,8 +147,6 @@ def order():
 
     return render_template("order.html", dishes=dishes)
 
-
-# Страница «О ресторане»
 @app.route("/about")
 def about():
     return render_template("about.html")
