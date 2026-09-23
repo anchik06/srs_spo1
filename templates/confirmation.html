@@ -4,30 +4,57 @@
 
 {% block content %}
 
-<h2>Заказ принят!</h2>
+<h2>
+    Заказ принят!
+</h2>
+<div class="success-message">
 
-<p>Спасибо, {{ customer_name }}!</p>
+    <strong>
+        Спасибо, {{ customer_name }}!
+    </strong>
+    <p>
+        Ваш заказ успешно обработан.
+    </p>
 
-<p>Ваш заказ успешно обработан.</p>
+</div>
+<div class="order-summary">
+    <h3>
+        Информация о заказе
+    </h3>
+    <p>
+        <strong>Имя:</strong>
+        {{ customer_name }}
+    </p>
+    <p>
+        <strong>Телефон:</strong>
+        {{ phone }}
+    </p>
 
-<h3>Информация о заказе:</h3>
+    <p>
+        <strong>Блюдо:</strong>
+        {{ dish.name }}
+    </p>
+    <p>
+        <strong>Страна:</strong>
+        {{ dish.country }}
+    </p>
 
-<ul>
-    <li>Имя: {{ customer_name }}</li>
-    <li>Телефон: {{ phone }}</li>
-    <li>Блюдо: {{ dish.name }}</li>
-    <li>Страна: {{ dish.country }}</li>
-    <li>Количество: {{ quantity }}</li>
-    <li>Стоимость одного блюда: {{ dish.price }} руб</li>
-    <li><strong>Итоговая стоимость: {{ total_price }} руб</strong></li>
-</ul>
-
+    <p>
+        <strong>Количество:</strong>
+        {{ quantity }}
+    </p>
+    <p>
+        <strong>Стоимость одного блюда:</strong>
+        {{ dish.price }} руб
+    </p>
+    <p class="price">
+        Итоговая стоимость:
+        {{ total_price }} руб
+    </p>
+</div>
 <p>
-    <a href="{{ url_for('index') }}">Вернуться на главную</a>
+    <a href="{{ url_for('menu') }}" class="button">
+        Вернуться в меню
+    </a>
 </p>
-
-<p>
-    <a href="{{ url_for('menu') }}">Вернуться в меню</a>
-</p>
-
 {% endblock %}

@@ -4,43 +4,77 @@
 
 {% block content %}
 
-<h2>Оформление заказа</h2>
+<div class="order-form">
 
-{% if error %}
-    <p><strong>Ошибка:</strong> {{ error }}</p>
-{% endif %}
-
-<form method="POST" action="{{ url_for('order') }}">
+    <h2>
+        Оформление заказа
+    </h2>
 
     <p>
-        <label for="customer_name">Ваше имя:</label><br>
-        <input
-            type="text"
-            id="customer_name"
-            name="customer_name"
-            value="{{ customer_name|default('') }}"
-            required
-        >
+        Заполните форму, и мы подготовим ваш заказ.
     </p>
 
-    <p>
-        <label for="phone">Номер телефона:</label><br>
-        <input
-            type="tel"
-            id="phone"
-            name="phone"
-            value="{{ phone|default('') }}"
-            required
-        >
-    </p>
 
-    <p>
-        <label for="dish_id">Выберите блюдо:</label><br>
+    {% if error %}
 
-        <select id="dish_id" name="dish_id" required>
-            <option value="">-- Выберите блюдо --</option>
+    <div class="error-message">
 
-            {% for dish in dishes %}
+        <strong>Ошибка:</strong>
+        {{ error }}
+
+    </div>
+
+    {% endif %}
+
+
+    <form
+        method="POST"
+        action="{{ url_for('order') }}"
+    >
+
+        <div class="form-group">
+            <label for="customer_name">
+                Ваше имя
+            </label>
+            <input
+                type="text"
+                id="customer_name"
+                name="customer_name"
+                value="{{ customer_name|default('') }}"
+                placeholder="Введите имя"
+                required
+            >
+        </div>
+        <div class="form-group">
+            <label for="phone">
+                Номер телефона
+            </label>
+            <input
+                type="tel"
+                id="phone"
+                name="phone"
+                value="{{ phone|default('') }}"
+                placeholder="+7..."
+                required
+            >
+        </div>
+
+
+        <div class="form-group">
+            <label for="dish_id">
+                Выберите блюдо
+            </label>
+            <select
+                id="dish_id"
+                name="dish_id"
+                required
+            >
+                <option value="">
+                    -- Выберите блюдо --
+                </option>
+
+                {% for dish in dishes %}
+
                 <option
                     value="{{ dish.id }}"
                     {% if selected_dish|default('')|string == dish.id|string %}
@@ -49,25 +83,30 @@
                 >
                     {{ dish.name }} — {{ dish.price }} руб
                 </option>
-            {% endfor %}
-        </select>
-    </p>
 
-    <p>
-        <label for="quantity">Количество:</label><br>
-        <input
-            type="number"
-            id="quantity"
-            name="quantity"
-            min="1"
-            max="10"
-            value="{{ quantity|default('1') }}"
-            required
-        >
-    </p>
+                {% endfor %}
 
-    <button type="submit">Оформить заказ</button>
+            </select>
 
-</form>
+        </div>
 
+        <div class="form-group">
+            <label for="quantity">
+                Количество
+            </label>
+            <input
+                type="number"
+                id="quantity"
+                name="quantity"
+                min="1"
+                max="10"
+                value="{{ quantity|default('1') }}"
+                required
+            >
+        </div>
+        <button type="submit" class="button">
+            Оформить заказ
+        </button>
+    </form>
+</div>
 {% endblock %}

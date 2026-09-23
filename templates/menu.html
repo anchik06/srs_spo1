@@ -6,64 +6,48 @@
 
 <h2>Меню WorldBite</h2>
 
-<p>Выберите блюдо, чтобы узнать подробности.</p>
+<p>Блюда уличной еды со всего мира.</p>
 
-<p>
-    Фильтр по стране:
-    <a href="{{ url_for('menu') }}">Все</a> |
-    <a href="{{ url_for('menu', country='Мексика') }}">Мексика</a> |
-    <a href="{{ url_for('menu', country='США') }}">США</a> |
-    <a href="{{ url_for('menu', country='Япония') }}">Япония</a> |
-    <a href="{{ url_for('menu', country='Турция') }}">Турция</a> |
-    <a href="{{ url_for('menu', country='Италия') }}">Италия</a> |
+<div class="filter">
+    <a href="{{ url_for('menu') }}">Все</a>
+    <a href="{{ url_for('menu', country='Мексика') }}">Мексика</a>
+    <a href="{{ url_for('menu', country='США') }}">США</a>
+    <a href="{{ url_for('menu', country='Япония') }}">Япония</a>
+    <a href="{{ url_for('menu', country='Турция') }}">Турция</a>
+    <a href="{{ url_for('menu', country='Италия') }}">Италия</a>
     <a href="{{ url_for('menu', country='Таиланд') }}">Таиланд</a>
-</p>
+</div>>
 
 {% if selected_country %}
-    <p>Выбранная страна: {{ selected_country }}</p>
+<p class="selected-country">Сейчас показаны блюда:
+    <strong>{{ selected_country }}</strong>
+</p>
 {% endif %}
 
-
-<table>
-    <tr>
-
+{% if dishes %}
+<div class="menu-grid">
     {% for dish in dishes %}
-
-        <td>
-
-            <h3>{{ dish.name }}</h3>
-
-            <img
+    <article class="dish-card">
+        <img
     src="{{ url_for('static', filename='image/' + dish.image) }}"
-    alt="{{ dish.name }}"
-    width="250"
-    height="180"
-    style="object-fit: cover;"
->
+    alt="{{ dish.name }}">
+        <div class="dish-info">
+            <h3>
+                {{ dish.name}}
+            </h3>
+            <p class="country"> {{ dish.country }}</p>
 
-            <p><strong>Страна:</strong> {{ dish.country }}</p>
+            <p class="price"> {{ dish.price }} руб</p>
 
-            <p><strong>Цена:</strong> {{ dish.price }} руб</p>
-
-            <a href="{{ url_for('dish_detail', dish_id=dish.id) }}">
+            <a href="{{ url_for('dish_detail', dish_id=dish.id) }}" class="detail-link">
                 Подробнее о блюде
             </a>
-
-            <br><br>
-
-        </td>
-
-        {% if loop.index % 2 == 0 %}
-            </tr>
-            <tr>
-        {% endif %}
+        </div>
+    </article>
 
     {% endfor %}
-
-    </tr>
-</table>
-
-{% if not dishes %}
+</div>
+{% else %}
     <p>Блюда этой страны не найдены.</p>
 {% endif %}
 
